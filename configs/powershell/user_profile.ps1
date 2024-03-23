@@ -3,6 +3,7 @@
 
 Import-Module posh-git
 $omp_config = Join-Path $PSScriptRoot ".\takuya.omp.json"
+$squash_config = Join-Path $PSScriptRoot ".\fix_sqash.ps1"
 oh-my-posh --init --shell pwsh --config $omp_config | Invoke-Expression
 
 Import-Module -Name Terminal-Icons
@@ -21,6 +22,7 @@ Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+f' -PSReadlineChordReverseHistory
 $env:GIT_SSH = "C:\Windows\system32\OpenSSH\ssh.exe"
 
 # Alias
+Set-Alias -Name fixSqash -Value $squash_config
 Set-Alias -Name vim -Value nvim
 Set-Alias ll ls
 Set-Alias g git
