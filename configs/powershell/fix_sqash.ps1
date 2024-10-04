@@ -1,16 +1,23 @@
 # Проверяем, что переданы аргументы
-if ($args.Count -ne 2) {
-    Write-Host "Usage: .\script.ps1 <branch_name> <commit_message>"
+if ($args.Count -ne 3) {
+    Write-Host "Usage: .\script.ps1 <base_branch> <branch_name> <commit_message>"
     exit 1
 }
 
 # Получаем аргументы
-$BRANCH_NAME = $args[0]
-$COMMIT_MESSAGE = $args[1]
+$BASE_BRANCH = $args[0]
+$BRANCH_NAME = $args[1]
+$COMMIT_MESSAGE = $args[2]
+
+# Проверяем, что base_branch является main или dev
+if ($BASE_BRANCH -ne "main" -and $BASE_BRANCH -ne "dev") {
+    Write-Host "Error: Base branch must be 'main' or 'dev'."
+    exit 1
+}
 
 # Переключаемся на основную ветку и обновляем её
-Write-Host "Switching to the main branch and pulling the latest changes..."
-git checkout main
+Write-Host "Switching to the $BASE_BRANCH branch and pulling the latest changes..."
+git checkout $BASE_BRANCH
 git pull
 
 # Сливаем изменения из указанной ветки с помощью squash
